@@ -1,7 +1,8 @@
 import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ContactItem from './ContactItem';
-import * as actions from '../../redux/phonebook-actions';
+import * as operations from '../../redux/phonebook-operations';
 import { getVisibleContacts } from '../../redux/phonebook-selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import s from './ContactList.module.css';
@@ -10,7 +11,11 @@ function ContactList() {
   const contacts = useSelector(getVisibleContacts);
 
   const dispatch = useDispatch();
-  const deleteContact = id => dispatch(actions.deleteContact(id));
+  const deleteContact = id => dispatch(operations.deleteContact(id));
+
+  useEffect(() => {
+    dispatch(operations.fetchContacts());
+  }, [dispatch]);
 
   return (
     <ul className={s.contactList}>
@@ -35,7 +40,7 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     }),
   ),
-  deleteContact: PropTypes.func.isRequired,
+  deleteContact: PropTypes.func,
 };
 
 export default ContactList;

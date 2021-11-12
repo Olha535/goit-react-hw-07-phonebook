@@ -3,13 +3,12 @@ import { useState } from 'react';
 import s from './ContactForm.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from '../../redux/phonebook-selectors';
-import * as phonebookActions from '../../redux/phonebook-actions';
+import { addContact } from '../../redux/phonebook-operations';
 
 function ContactForm() {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
-  const onSubmit = (name, number) =>
-    dispatch(phonebookActions.addContact(name, number));
+  const onSubmit = (name, number) => dispatch(addContact(name, number));
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
